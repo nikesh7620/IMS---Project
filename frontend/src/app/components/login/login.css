@@ -1,0 +1,942 @@
+
+/* =========================================
+   GLOBAL LOGIN COMPONENT
+========================================= */
+
+:host {
+  display: block;
+  width: 100%;
+  height: 100%;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  color: #10152f;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+
+/* =========================================
+   MAIN PAGE LAYOUT
+========================================= */
+
+.login-page {
+  display: grid;
+  grid-template-columns: 42% 58%;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  min-height: 0;
+  overflow: hidden;
+  background: #f1f2f7;
+}
+
+
+/* =========================================
+   LEFT BRANDING PANEL
+========================================= */
+
+.branding-panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-width: 0;
+  height: 100%;
+  padding: clamp(20px, 3vw, 42px) clamp(20px, 3.5vw, 54px);
+  color: #fff;
+
+  background:
+    radial-gradient(
+      circle at 75% 10%,
+      rgba(123, 54, 255, .32),
+      transparent 38%
+    ),
+    linear-gradient(
+      145deg,
+      #171b92 0%,
+      #2916a3 43%,
+      #071c79 100%
+    );
+
+  border-radius: 12px 0 0 12px;
+}
+
+
+/* =========================================
+   BRAND LOGO
+========================================= */
+
+.brand-header {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.brand-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: clamp(44px, 4.2vw, 64px);
+  height: clamp(44px, 4.2vw, 64px);
+  flex-shrink: 0;
+  border-radius: 14px;
+  background: rgba(103, 91, 255, .28);
+}
+
+.brand-icon svg {
+  width: 75%;
+  height: 75%;
+}
+
+.brand-name {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+}
+
+.brand-name h1 {
+  margin: 0;
+  font-size: clamp(28px, 3vw, 44px);
+  line-height: 1;
+  font-weight: 750;
+  letter-spacing: -1px;
+}
+
+.brand-name span {
+  padding-left: 12px;
+  border-left: 1px solid rgba(255,255,255,.35);
+  font-size: clamp(11px, 1.15vw, 16px);
+  line-height: 1.4;
+}
+
+
+/* =========================================
+   BRAND CONTENT
+========================================= */
+
+.brand-content {
+  position: relative;
+  z-index: 2;
+  margin-top: clamp(35px, 7vh, 75px);
+}
+
+.welcome-text {
+  margin: 0 0 8px;
+  font-size: clamp(18px, 1.8vw, 27px);
+  font-weight: 400;
+}
+
+.brand-content h2 {
+  margin: 0;
+  font-size: clamp(29px, 3.1vw, 46px);
+  line-height: 1.1;
+  font-weight: 750;
+  letter-spacing: -.8px;
+}
+
+.purple-line {
+  width: clamp(60px, 6vw, 80px);
+  height: 5px;
+  margin-top: clamp(17px, 3vh, 30px);
+  border-radius: 10px;
+  background: linear-gradient(90deg, #b23aff, #6734ed);
+}
+
+.brand-description {
+  margin-top: clamp(14px, 2.5vh, 25px);
+  font-size: clamp(13px, 1.3vw, 18px);
+  line-height: 1.55;
+  font-weight: 400;
+}
+
+
+/* =========================================
+   BACKGROUND DECORATIONS
+========================================= */
+
+.decoration {
+  position: absolute;
+  pointer-events: none;
+}
+
+.decoration-one {
+  top: 37%;
+  right: 25%;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(116, 97, 255, .12);
+}
+
+.decoration-two {
+  top: 33%;
+  left: -20px;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background: rgba(116, 97, 255, .1);
+}
+
+.decoration-three {
+  top: 4%;
+  right: 7%;
+  width: 110px;
+  height: 110px;
+  opacity: .5;
+
+  background-image: radial-gradient(
+    rgba(170, 120, 255, .5) 2px,
+    transparent 3px
+  );
+
+  background-size: 15px 15px;
+}
+
+
+/* =========================================
+   INTERVIEW ILLUSTRATION
+========================================= */
+
+.illustration {
+  position: absolute;
+  z-index: 1;
+  left: 5%;
+  bottom: 5%;
+  width: 90%;
+  height: 38%;
+  min-height: 150px;
+  max-height: 350px;
+}
+
+
+/* Candidate cards */
+
+.candidate-card {
+  position: absolute;
+  top: 0;
+  width: 30%;
+  height: 30%;
+  min-height: 65px;
+  padding: clamp(7px, 1vw, 13px);
+  overflow: hidden;
+  border-radius: 11px;
+  background: rgba(150, 105, 255, .3);
+  box-shadow: 0 5px 20px rgba(0,0,0,.08);
+}
+
+.card-one {
+  left: 29%;
+}
+
+.card-two {
+  right: 7%;
+}
+
+.candidate-avatar {
+  float: left;
+  display: grid;
+  place-items: center;
+  width: clamp(27px, 3vw, 42px);
+  height: clamp(27px, 3vw, 42px);
+  border-radius: 50%;
+  background: rgba(255,255,255,.25);
+  font-size: clamp(16px, 2vw, 26px);
+}
+
+.candidate-details {
+  margin-left: 35%;
+  padding-top: 3px;
+}
+
+.candidate-details span {
+  display: block;
+  height: 5px;
+  margin-bottom: 5px;
+  border-radius: 10px;
+  background: rgba(255,255,255,.2);
+}
+
+.candidate-details span:nth-child(2) {
+  width: 85%;
+}
+
+.candidate-details span:nth-child(3) {
+  width: 60%;
+}
+
+.stars {
+  margin-top: 5px;
+  color: #c7b5ff;
+  font-size: clamp(9px, 1vw, 14px);
+  letter-spacing: 1px;
+}
+
+
+/* Interview scene */
+
+.interview-scene {
+  position: absolute;
+  bottom: 5%;
+  left: 5%;
+  width: 90%;
+  height: 68%;
+  border-bottom: 10px solid rgba(4, 10, 64, .3);
+}
+
+
+/* People */
+
+.person {
+  position: absolute;
+  bottom: 0;
+  width: 25%;
+  height: 90%;
+}
+
+.female {
+  left: 2%;
+}
+
+.male {
+  right: 2%;
+}
+
+.person-head {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  left: 18%;
+  width: 65%;
+  height: 38%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: clamp(32px, 4vw, 57px);
+}
+
+.person-body {
+  position: absolute;
+  bottom: 12%;
+  left: 5%;
+  width: 90%;
+  height: 58%;
+  border-radius: 35% 35% 8% 8%;
+  background: linear-gradient(135deg, #9347e6, #3a169d);
+}
+
+.male .person-body {
+  background: linear-gradient(135deg, #27336b, #10183f);
+}
+
+.person-legs {
+  position: absolute;
+  bottom: 0;
+  left: 17%;
+  width: 65%;
+  height: 18%;
+  border-radius: 8px;
+  background: #101a49;
+}
+
+
+/* Interview table */
+
+.interview-table {
+  position: absolute;
+  z-index: 3;
+  bottom: 27%;
+  left: 20%;
+  width: 61%;
+}
+
+.table-top {
+  height: 9px;
+  border-radius: 4px;
+  background: #a48aff;
+}
+
+.table-leg {
+  width: 7px;
+  height: clamp(55px, 8vh, 90px);
+  margin: auto;
+  background: #7054d5;
+}
+
+.laptop {
+  position: absolute;
+  z-index: 2;
+  bottom: 7px;
+  left: 29%;
+  width: 48px;
+  height: 30px;
+  border: 4px solid #111c49;
+  border-radius: 4px;
+  background: #262c76;
+  transform: skew(-12deg);
+}
+
+
+/* Success icon */
+
+.success-icon {
+  position: absolute;
+  z-index: 4;
+  top: 35%;
+  right: -1%;
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid rgba(255,255,255,.2);
+  border-radius: 50%;
+  background: #4c35bd;
+  color: #fff;
+  font-size: 22px;
+}
+
+
+/* Plants */
+
+.plant {
+  position: absolute;
+  bottom: 0;
+  font-size: clamp(30px, 5vw, 65px);
+}
+
+.plant-left {
+  left: 0;
+}
+
+.plant-right {
+  right: 27%;
+  font-size: clamp(25px, 3.5vw, 43px);
+}
+
+
+/* =========================================
+   RIGHT LOGIN PANEL
+========================================= */
+
+.login-panel {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 0;
+  height: 100%;
+  overflow: hidden;
+  padding: 65px clamp(30px, 6.5vw, 100px) 25px;
+  background: #fff;
+  border-radius: 0 12px 12px 0;
+  box-shadow: 0 4px 20px rgba(20, 28, 70, .08);
+}
+
+
+/* =========================================
+   LANGUAGE SELECTOR
+========================================= */
+
+.language-container {
+  position: absolute;
+  top: clamp(18px, 4vh, 42px);
+  right: clamp(20px, 4vw, 55px);
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 48px;
+  padding: 0 13px;
+  border: 1px solid #d5d9e5;
+  border-radius: 9px;
+  background: #fff;
+}
+
+.globe-icon {
+  width: 22px;
+  height: 22px;
+  color: #35416a;
+}
+
+.language-container select {
+  max-width: 120px;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: #10152f;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+
+/* =========================================
+   LOGIN CONTAINER
+========================================= */
+
+.login-container {
+  width: 100%;
+  max-width: 610px;
+  margin: auto;
+}
+
+.login-heading {
+  margin-bottom: clamp(24px, 4.5vh, 45px);
+  text-align: center;
+}
+
+.login-heading h2 {
+  margin: 0 0 10px;
+  color: #0d1532;
+  font-size: clamp(28px, 2.8vw, 42px);
+  font-weight: 750;
+  letter-spacing: -.7px;
+}
+
+.login-heading p {
+  margin: 0;
+  color: #536080;
+  font-size: clamp(14px, 1.4vw, 19px);
+}
+
+
+/* =========================================
+   FORM FIELDS
+========================================= */
+
+.form-group {
+  margin-bottom: clamp(19px, 3.5vh, 34px);
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 10px;
+  color: #10152f;
+  font-size: clamp(14px, 1.25vw, 18px);
+  font-weight: 650;
+}
+
+.input-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: clamp(55px, 7.5vh, 72px);
+  border: 1px solid #cfd4e2;
+  border-radius: 9px;
+  background: #fff;
+  transition: border-color .2s, box-shadow .2s;
+}
+
+.input-container:focus-within {
+  border-color: #5422d8;
+  box-shadow: 0 0 0 3px rgba(84, 34, 216, .09);
+}
+
+.input-icon {
+  flex-shrink: 0;
+  width: 23px;
+  height: 23px;
+  margin: 0 20px;
+  color: #5424dc;
+}
+
+.input-container input {
+  width: 100%;
+  min-width: 0;
+  height: 100%;
+  padding: 0 10px 0 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: #10152f;
+  font-size: clamp(14px, 1.3vw, 18px);
+}
+
+.input-container input::placeholder {
+  color: #73809e;
+  opacity: 1;
+}
+
+
+/* Password toggle */
+
+.password-toggle {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  margin-right: 7px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: #465375;
+  cursor: pointer;
+}
+
+.password-toggle:hover {
+  background: #f4f1ff;
+}
+
+.password-toggle svg {
+  width: 24px;
+  height: 24px;
+}
+
+
+/* =========================================
+   REMEMBER ME / FORGOT PASSWORD
+========================================= */
+
+.form-options {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0 0 clamp(23px, 3.5vh, 34px);
+}
+
+.remember-option {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  color: #202947;
+  font-size: clamp(13px, 1.2vw, 16px);
+  cursor: pointer;
+}
+
+.remember-option input {
+  width: 21px;
+  height: 21px;
+  margin: 0;
+  accent-color: #5420d5;
+  cursor: pointer;
+}
+
+.forgot-link {
+  padding: 5px 0;
+  border: none;
+  background: transparent;
+  color: #4a16e5;
+  font-size: clamp(13px, 1.2vw, 16px);
+  cursor: pointer;
+}
+
+.forgot-link:hover {
+  text-decoration: underline;
+}
+
+
+/* =========================================
+   LOGIN BUTTON
+========================================= */
+
+.login-button {
+  display: block;
+  width: 100%;
+  height: clamp(57px, 7.5vh, 72px);
+  border: none;
+  border-radius: 9px;
+  background: linear-gradient(100deg, #3917c1, #6824ce);
+  color: #fff;
+  font-size: clamp(17px, 1.5vw, 21px);
+  font-weight: 650;
+  cursor: pointer;
+  transition: transform .2s, box-shadow .2s, opacity .2s;
+}
+
+.login-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 7px 20px rgba(75, 28, 190, .22);
+}
+
+.login-button:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.login-button:disabled {
+  opacity: .65;
+  cursor: not-allowed;
+}
+
+
+/* =========================================
+   DIVIDER
+========================================= */
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  margin: clamp(22px, 4vh, 38px) 0;
+}
+
+.divider span {
+  flex: 1;
+  height: 1px;
+  background: #dce0e9;
+}
+
+.divider p {
+  margin: 0;
+  color: #283453;
+  font-size: 15px;
+}
+
+
+/* =========================================
+   SECURITY INFORMATION
+========================================= */
+
+.security-info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+}
+
+.security-icon {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: #f0eaff;
+  color: #5220d3;
+}
+
+.security-icon svg {
+  width: 27px;
+  height: 27px;
+}
+
+.security-text p {
+  margin: 0 0 6px;
+  color: #17203e;
+  font-size: clamp(13px, 1.2vw, 16px);
+  font-weight: 550;
+}
+
+.security-text span {
+  color: #536080;
+  font-size: clamp(12px, 1.2vw, 15px);
+}
+
+
+/* =========================================
+   LAPTOP / SMALL DESKTOP
+========================================= */
+
+@media (max-width: 1100px) {
+
+  .login-page {
+    grid-template-columns: 40% 60%;
+  }
+
+  .branding-panel {
+    padding-left: 25px;
+    padding-right: 25px;
+  }
+
+  .login-panel {
+    padding-left: 35px;
+    padding-right: 35px;
+  }
+
+  .illustration {
+    height: 32%;
+  }
+
+}
+
+
+/* =========================================
+   SHORT LAPTOP SCREENS
+========================================= */
+
+@media (max-height: 750px) and (min-width: 701px) {
+
+  .branding-panel {
+    padding-top: 20px;
+    padding-bottom: 15px;
+  }
+
+  .brand-content {
+    margin-top: 25px;
+  }
+
+  .purple-line {
+    margin-top: 14px;
+  }
+
+  .brand-description {
+    margin-top: 12px;
+    line-height: 1.4;
+  }
+
+  .illustration {
+    height: 30%;
+    bottom: 3%;
+  }
+
+  .login-panel {
+    padding-top: 55px;
+    padding-bottom: 15px;
+  }
+
+  .login-heading {
+    margin-bottom: 20px;
+  }
+
+  .form-group {
+    margin-bottom: 17px;
+  }
+
+  .form-options {
+    margin-bottom: 18px;
+  }
+
+  .divider {
+    margin: 17px 0;
+  }
+
+  .input-container {
+    height: 54px;
+  }
+
+  .login-button {
+    height: 55px;
+  }
+
+}
+
+
+/* =========================================
+   TABLET AND MOBILE
+========================================= */
+
+@media (max-width: 700px) {
+
+  .login-page {
+    display: block;
+    height: 100vh;
+    height: 100dvh;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  .branding-panel {
+    display: none;
+  }
+
+  .login-panel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: auto;
+    min-height: 100vh;
+    min-height: 100dvh;
+    padding: 100px 24px 35px;
+    overflow: visible;
+    border-radius: 0;
+  }
+
+  .language-container {
+    top: 20px;
+    right: 22px;
+  }
+
+  .login-container {
+    max-width: 480px;
+  }
+
+  .login-heading {
+    margin-bottom: 32px;
+  }
+
+  .form-group {
+    margin-bottom: 23px;
+  }
+
+  .input-container {
+    height: 58px;
+  }
+
+  .login-button {
+    height: 58px;
+  }
+
+  .divider {
+    margin: 27px 0;
+  }
+
+}
+
+
+/* =========================================
+   VERY SMALL MOBILE
+========================================= */
+
+@media (max-width: 380px) {
+
+  .login-panel {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  .form-options {
+    gap: 8px;
+  }
+
+  .remember-option {
+    gap: 7px;
+    font-size: 12px;
+  }
+
+  .remember-option input {
+    width: 18px;
+    height: 18px;
+  }
+
+  .forgot-link {
+    font-size: 12px;
+  }
+
+  .security-info {
+    gap: 10px;
+  }
+
+  .security-icon {
+    width: 43px;
+    height: 43px;
+  }
+
+}
+
+
+/* =========================================
+   ACCESSIBILITY
+========================================= */
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 2px solid #5422d8;
+  outline-offset: 3px;
+}
+
+.error-message {
+  margin-top: 12px;
+  padding: 12px 14px;
+  color: #b42318;
+  background-color: #fef3f2;
+  border: 1px solid #fecdca;
+  border-radius: 6px;
+  font-size: 13px;
+}

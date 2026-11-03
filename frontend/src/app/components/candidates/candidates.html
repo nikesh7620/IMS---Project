@@ -1,0 +1,276 @@
+<section class="candidates" aria-label="Candidate list">
+  <div class="panel">
+    <!-- Search, filters and primary action -->
+    <div class="toolbar">
+      <div class="control control--search">
+        <label class="sr-only" for="candidate-search">Search candidates</label>
+        <span class="search-box">
+          <input
+            id="candidate-search"
+            type="search"
+            placeholder="Search candidates…"
+            autocomplete="off"
+            [value]="searchTerm()"
+            (input)="onSearch($event)"
+          />
+          <svg class="search-box__icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <circle cx="11" cy="11" r="7" />
+            <path d="m20 20-3.5-3.5" />
+          </svg>
+        </span>
+      </div>
+
+      <div class="control">
+        <label for="status-filter">Status</label>
+        <select id="status-filter" (change)="onStatus($event)">
+          <option value="" [selected]="statusFilter() === ''">All Status</option>
+          @for (status of statuses; track status) {
+            <option [value]="status" [selected]="statusFilter() === status">{{ status }}</option>
+          }
+        </select>
+      </div>
+
+      <div class="control">
+        <label for="position-filter">Position</label>
+        <select id="position-filter" (change)="onPosition($event)">
+          <option value="" [selected]="positionFilter() === ''">All Positions</option>
+          @for (position of positions(); track position) {
+            <option [value]="position" [selected]="positionFilter() === position">{{ position }}</option>
+          }
+        </select>
+      </div>
+
+      <div class="control">
+        <label for="source-filter">Source</label>
+        <select id="source-filter" (change)="onSource($event)">
+          <option value="" [selected]="sourceFilter() === ''">All Sources</option>
+          @for (source of sources(); track source) {
+            <option [value]="source" [selected]="sourceFilter() === source">{{ source }}</option>
+          }
+        </select>
+      </div>
+
+      <button
+        type="button"
+        class="btn btn--outline more-filters-btn"
+        aria-controls="more-filters"
+        [attr.aria-expanded]="showMoreFilters()"
+        (click)="showMoreFilters.set(!showMoreFilters())"
+      >
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true">
+          <path d="M3 5h18l-7 8v5l-4 2v-7z" />
+        </svg>
+        More Filters
+      </button>
+
+      <a class="btn btn--primary add-btn" routerLink="/candidates/new">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+          <path d="M12 5v14M5 12h14" />
+        </svg>
+        Add Candidate
+      </a>
+    </div>
+
+    @if (showMoreFilters()) {
+      <div id="more-filters" class="more-filters">
+        <div class="control">
+          <label for="applied-from">Applied from</label>
+          <input id="applied-from" type="date" [value]="appliedFrom()" (change)="onAppliedFrom($event)" />
+        </div>
+        <div class="control">
+          <label for="applied-to">Applied to</label>
+          <input id="applied-to" type="date" [value]="appliedTo()" (change)="onAppliedTo($event)" />
+        </div>
+        <button type="button" class="btn btn--ghost" (click)="clearFilters()">Clear all filters</button>
+      </div>
+    }
+
+    <!-- Export and page size -->
+    <div class="table-tools">
+      <div class="menu-anchor">
+        <button
+          type="button"
+          class="btn btn--outline export-btn"
+          aria-haspopup="menu"
+          [attr.aria-expanded]="exportOpen()"
+          (click)="toggleExport($event)"
+        >
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 4v11m0 0-4-4m4 4 4-4M5 20h14" />
+          </svg>
+          Export
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="m6 9 6 6 6-6" />
+          </svg>
+        </button>
+        @if (exportOpen()) {
+          <ul class="menu" role="menu">
+            <li role="none">
+              <button type="button" role="menuitem" (click)="exportCsv()">CSV (.csv)</button>
+            </li>
+            <li role="none">
+              <button type="button" role="menuitem" disabled title="Server-side export, available when the API is connected">Excel (.xlsx)</button>
+            </li>
+            <li role="none">
+              <button type="button" role="menuitem" disabled title="Server-side export, available when the API is connected">PDF (.pdf)</button>
+            </li>
+          </ul>
+        }
+      </div>
+
+      <div class="page-size">
+        <label for="page-size">Show</label>
+        <select id="page-size" (change)="onPageSize($event)">
+          @for (size of pageSizes; track size) {
+            <option [value]="size" [selected]="pageSize() === size">{{ size }}</option>
+          }
+        </select>
+        <span>entries</span>
+      </div>
+    </div>
+
+    <!-- Table -->
+    <div class="table-wrap">
+      <table>
+        <caption class="sr-only">Candidates</caption>
+        <thead>
+          <tr>
+            <th scope="col" class="col-check">
+              <input
+                class="check-all"
+                type="checkbox"
+                aria-label="Select all candidates on this page"
+                [checked]="allOnPageSelected()"
+                [indeterminate]="someOnPageSelected()"
+                (change)="toggleAllOnPage()"
+              />
+            </th>
+            @for (col of columns; track col.key) {
+              <th scope="col" [attr.aria-sort]="ariaSort(col.key)">
+                <button
+                  type="button"
+                  class="sort"
+                  [attr.data-dir]="sortKey() === col.key ? sortDirection() : null"
+                  (click)="sortBy(col.key)"
+                >
+                  {{ col.label }}
+                  <svg class="sort__icon" viewBox="0 0 10 14" width="10" height="14" aria-hidden="true">
+                    <path class="up" d="M5 1 9 5H1z" />
+                    <path class="down" d="M5 13 1 9h8z" />
+                  </svg>
+                </button>
+              </th>
+            }
+            <th scope="col" class="col-actions">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (c of pageRows(); track c.id) {
+            <tr class="row" [class.is-selected]="isSelected(c.id)">
+              <td class="col-check">
+                <input
+                  class="row-check"
+                  type="checkbox"
+                  [attr.aria-label]="'Select ' + c.name"
+                  [checked]="isSelected(c.id)"
+                  (change)="toggleRow(c.id)"
+                />
+              </td>
+              <td><a class="code-link" [routerLink]="['/candidates', c.id]">{{ c.code }}</a></td>
+              <td>
+                <span class="person">
+                  <span class="avatar" [attr.data-tone]="c.id % 5" aria-hidden="true">{{ initials(c.name) }}</span>
+                  <span>{{ c.name }}</span>
+                </span>
+              </td>
+              <td>{{ c.position }}</td>
+              <td>{{ c.source }}</td>
+              <td>{{ c.appliedOn | date: 'dd MMM yyyy' }}</td>
+              <td><span class="badge" [attr.data-status]="statusKey(c.status)">{{ c.status }}</span></td>
+              <td class="col-actions">
+                <span class="actions">
+                  <a class="icon-btn icon-btn--view" [routerLink]="['/candidates', c.id]" [attr.aria-label]="'View ' + c.name">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z" />
+                      <circle cx="12" cy="12" r="3" />
+                    </svg>
+                  </a>
+                  <span class="menu-anchor">
+                    <button
+                      type="button"
+                      class="icon-btn kebab"
+                      aria-haspopup="menu"
+                      [attr.aria-expanded]="openMenuId() === c.id"
+                      [attr.aria-label]="'More actions for ' + c.name"
+                      (click)="toggleMenu(c.id, $event)"
+                    >
+                      <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true">
+                        <circle cx="12" cy="5" r="1.8" />
+                        <circle cx="12" cy="12" r="1.8" />
+                        <circle cx="12" cy="19" r="1.8" />
+                      </svg>
+                    </button>
+                    @if (openMenuId() === c.id) {
+                      <ul class="menu" role="menu">
+                        <li role="none"><a role="menuitem" [routerLink]="['/candidates', c.id]">View details</a></li>
+                        <li role="none"><a role="menuitem" [routerLink]="['/candidates', c.id, 'edit']">Edit candidate</a></li>
+                        <li role="none">
+                          <a role="menuitem" routerLink="/interviews/new" [queryParams]="{ candidateId: c.id }">Schedule interview</a>
+                        </li>
+                      </ul>
+                    }
+                  </span>
+                </span>
+              </td>
+            </tr>
+          } @empty {
+            <tr>
+              <td class="empty" colspan="8">
+                <p>No candidates match your filters.</p>
+                <button type="button" class="btn btn--outline" (click)="clearFilters()">Clear filters</button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Footer: range summary and pager -->
+    <div class="table-footer">
+      <p class="summary" aria-live="polite">
+        Showing {{ rangeStart() }} to {{ rangeEnd() }} of {{ totalEntries() }} entries
+      </p>
+
+      <nav class="pagination" aria-label="Candidate pages">
+        <button type="button" class="page-btn" aria-label="Previous page" [disabled]="page() === 1" (click)="goTo(page() - 1)">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="m15 6-6 6 6 6" />
+          </svg>
+        </button>
+
+        @for (item of pageItems(); track $index) {
+          @if (item === '…') {
+            <span class="ellipsis" aria-hidden="true">…</span>
+          } @else {
+            <button
+              type="button"
+              class="page-btn"
+              [class.is-current]="item === page()"
+              [attr.aria-current]="item === page() ? 'page' : null"
+              [attr.aria-label]="'Page ' + item"
+              (click)="goTo(item)"
+            >
+              {{ item }}
+            </button>
+          }
+        }
+
+        <button type="button" class="page-btn" aria-label="Next page" [disabled]="page() === totalPages()" (click)="goTo(page() + 1)">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="m9 6 6 6-6 6" />
+          </svg>
+        </button>
+      </nav>
+    </div>
+  </div>
+</section>

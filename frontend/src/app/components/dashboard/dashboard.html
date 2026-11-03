@@ -1,0 +1,411 @@
+<div class="dashboard-layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+
+    <div class="brand">
+      <div class="brand-icon">♟</div>
+      <div class="brand-text">
+        <h1>IMS</h1>
+        <span>Interview Management System</span>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+
+      <a routerLink="/dashboard" routerLinkActive="active">
+        <span class="nav-icon">⌂</span>
+        <span>Dashboard</span>
+      </a>
+
+      <a routerLink="/candidates" routerLinkActive="active">
+        <span class="nav-icon">♙</span>
+        <span>Candidates</span>
+      </a>
+
+      <a routerLink="/interviews" routerLinkActive="active">
+        <span class="nav-icon">▦</span>
+        <span>Interviews</span>
+      </a>
+
+      <a routerLink="/interviewers" routerLinkActive="active">
+        <span class="nav-icon">♧</span>
+        <span>Interviewers</span>
+      </a>
+
+      <a routerLink="/feedback" routerLinkActive="active">
+        <span class="nav-icon">☆</span>
+        <span>Feedback</span>
+      </a>
+
+      <a routerLink="/reports" routerLinkActive="active">
+        <span class="nav-icon">▥</span>
+        <span>Reports</span>
+      </a>
+
+      <a routerLink="/notifications" routerLinkActive="active">
+        <span class="nav-icon">♧</span>
+        <span>Notifications</span>
+        <span class="notification-count">{{ notificationsCount }}</span>
+      </a>
+
+      <a routerLink="/activity-log" routerLinkActive="active">
+        <span class="nav-icon">◷</span>
+        <span>Activity Log</span>
+      </a>
+
+      <a routerLink="/settings" routerLinkActive="active">
+        <span class="nav-icon">⚙</span>
+        <span>Settings</span>
+      </a>
+
+    </nav>
+
+    <div class="sidebar-user">
+      <div class="user-avatar">NM</div>
+
+      <div class="user-details">
+        <strong>{{ userName }}</strong>
+        <span>{{ userRole }}</span>
+      </div>
+
+      <button class="logout-button" title="Logout" (click)="logout()">
+        ⌄
+      </button>
+    </div>
+
+  </aside>
+
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content">
+
+    <!-- TOP HEADER -->
+    <header class="top-header">
+
+      <div class="header-left">
+        <button class="menu-button" aria-label="Menu">☰</button>
+        <h2>HR Dashboard</h2>
+      </div>
+
+      <div class="header-right">
+
+        <div class="search-box">
+          <span>⌕</span>
+          <input
+            type="text"
+            placeholder="Search candidates, interviews..."
+            (input)="onSearch($event)"
+          />
+          <span class="search-icon">⌕</span>
+        </div>
+
+        <button class="header-notification" title="Notifications">
+          ♧
+          <span class="notification-dot"></span>
+          <span class="notification-badge">{{ notificationsCount }}</span>
+        </button>
+
+        <div class="header-profile">
+          <div class="profile-avatar">NM</div>
+          <div class="profile-info">
+            <strong>{{ userName }}</strong>
+            <span>{{ userRole }}</span>
+          </div>
+          <span class="profile-arrow">⌄</span>
+        </div>
+
+      </div>
+
+    </header>
+
+
+    <!-- DASHBOARD BODY -->
+    <div class="dashboard-content">
+
+      <!-- SUMMARY CARDS -->
+      <section class="stats-grid">
+
+        @for (card of dashboardCards; track card.title) {
+          <div class="stat-card">
+
+            <div class="stat-icon" [ngClass]="card.color">
+              {{ card.icon }}
+            </div>
+
+            <div class="stat-details">
+              <h3>{{ card.title }}</h3>
+              <div class="stat-value">{{ card.value }}</div>
+              <p>{{ card.description }}</p>
+            </div>
+
+            <div class="stat-change" [ngClass]="card.direction">
+              @if (card.direction === 'up') {
+                <span>↑</span>
+              } @else if (card.direction === 'down') {
+                <span>↓</span>
+              }
+              {{ card.change }}
+              <small>vs last month</small>
+            </div>
+
+          </div>
+        }
+
+      </section>
+
+
+      <!-- DASHBOARD TWO COLUMN SECTION -->
+      <section class="dashboard-grid">
+
+        <!-- LEFT COLUMN -->
+        <div class="left-column">
+
+          <!-- UPCOMING INTERVIEWS -->
+          <div class="panel upcoming-panel">
+
+            <div class="panel-header">
+              <h3>Upcoming Interviews</h3>
+              <button class="text-button" (click)="viewAllInterviews()">
+                View All <span>→</span>
+              </button>
+            </div>
+
+            <div class="table-wrapper">
+              <table class="interview-table">
+
+                <thead>
+                  <tr>
+                    <th>Candidate</th>
+                    <th>Position</th>
+                    <th>Interviewer</th>
+                    <th>Date & Time</th>
+                    <th>Round</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  @for (interview of upcomingInterviews; track interview.candidate) {
+                    <tr>
+
+                      <td>
+                        <div class="candidate-cell">
+                          <div class="candidate-avatar">
+                            {{ interview.avatar }}
+                          </div>
+                          <span>{{ interview.candidate }}</span>
+                        </div>
+                      </td>
+
+                      <td>{{ interview.position }}</td>
+                      <td>{{ interview.interviewer }}</td>
+
+                      <td>
+                        <div class="date-cell">
+                          <span>{{ interview.date }}</span>
+                          <span>{{ interview.time }}</span>
+                        </div>
+                      </td>
+
+                      <td>{{ interview.round }}</td>
+
+                      <td>
+                        <span
+                          class="status-badge"
+                          [ngClass]="interview.status.toLowerCase()">
+                          {{ interview.status }}
+                        </span>
+                      </td>
+
+                    </tr>
+                  }
+                </tbody>
+
+              </table>
+            </div>
+
+            <div class="panel-footer">
+              <button class="outline-button" (click)="viewAllInterviews()">
+                View All Interviews <span>›</span>
+              </button>
+            </div>
+
+          </div>
+
+
+          <!-- INTERVIEW TREND -->
+          <div class="panel trend-panel">
+
+            <div class="panel-header">
+              <h3>Interviews Trend (This Month)</h3>
+
+              <select
+                class="period-select"
+                [value]="selectedPeriod"
+                (change)="onPeriodChange($event)">
+                <option>This Month</option>
+                <option>Last Month</option>
+                <option>This Year</option>
+              </select>
+            </div>
+
+            <div class="trend-chart">
+
+              <div class="chart-y-axis">
+                <span>50</span>
+                <span>40</span>
+                <span>30</span>
+                <span>20</span>
+                <span>10</span>
+                <span>0</span>
+              </div>
+
+              <div class="chart-main">
+
+                <svg viewBox="0 0 630 190" preserveAspectRatio="none">
+
+                  <defs>
+                    <linearGradient id="trendFill" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stop-color="#5925dc" stop-opacity="0.20"/>
+                      <stop offset="100%" stop-color="#5925dc" stop-opacity="0.01"/>
+                    </linearGradient>
+                  </defs>
+
+                  <line x1="0" y1="10" x2="630" y2="10" class="grid-line"/>
+                  <line x1="0" y1="45" x2="630" y2="45" class="grid-line"/>
+                  <line x1="0" y1="80" x2="630" y2="80" class="grid-line"/>
+                  <line x1="0" y1="115" x2="630" y2="115" class="grid-line"/>
+                  <line x1="0" y1="150" x2="630" y2="150" class="grid-line"/>
+                  <line x1="0" y1="185" x2="630" y2="185" class="grid-line"/>
+
+                  <path
+                    d="M35 150 Q105 128 175 105 T315 82 T455 118 T595 137 L595 185 L35 185 Z"
+                    fill="url(#trendFill)"
+                  />
+
+                  <path
+                    d="M35 150 Q105 128 175 105 T315 82 T455 118 T595 137"
+                    class="trend-line"
+                  />
+
+                  @for (point of trendData; track point.label) {
+                    <circle
+                      [attr.cx]="point.x"
+                      [attr.cy]="point.y"
+                      r="4.5"
+                      class="trend-point"
+                    />
+                    <text
+                      [attr.x]="point.x"
+                      [attr.y]="point.y - 13"
+                      class="chart-value">
+                      {{ point.value }}
+                    </text>
+                  }
+
+                </svg>
+
+                <div class="chart-x-axis">
+                  @for (point of trendData; track point.label) {
+                    <span>{{ point.label }}</span>
+                  }
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- RIGHT COLUMN -->
+        <div class="right-column">
+
+          <!-- INTERVIEW OVERVIEW -->
+          <div class="panel overview-panel">
+
+            <div class="panel-header">
+              <h3>Interview Overview (This Month)</h3>
+              <button class="text-button" (click)="viewReports()">
+                View Report
+              </button>
+            </div>
+
+            <div class="overview-content">
+
+              <div class="donut-chart">
+                <div class="donut-center">
+                  <span>Total</span>
+                  <strong>120</strong>
+                </div>
+              </div>
+
+              <div class="overview-legend">
+
+                @for (item of interviewOverview; track item.label) {
+                  <div class="legend-item">
+
+                    <span class="legend-dot" [ngClass]="item.color"></span>
+
+                    <strong>{{ item.label }}</strong>
+
+                    <span class="legend-count">{{ item.count }}</span>
+
+                    <span class="legend-percentage">
+                      ({{ item.percentage }})
+                    </span>
+
+                  </div>
+                }
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <!-- RECENT NOTIFICATIONS -->
+          <div class="panel notifications-panel">
+
+            <div class="panel-header">
+              <h3>Recent Notifications</h3>
+              <button class="text-button" (click)="viewAllNotifications()">
+                View All
+              </button>
+            </div>
+
+            <div class="notification-list">
+
+              @for (notification of notifications; track notification.message) {
+                <div class="notification-item">
+
+                  <div class="notification-icon" [ngClass]="notification.color">
+                    {{ notification.icon }}
+                  </div>
+
+                  <p>{{ notification.message }}</p>
+
+                  <span class="notification-time">
+                    {{ notification.time }}
+                  </span>
+
+                </div>
+              }
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+    </div>
+
+  </main>
+
+</div>
