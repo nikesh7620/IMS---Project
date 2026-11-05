@@ -1,276 +1,409 @@
-<section class="candidates" aria-label="Candidate list">
-  <div class="panel">
-    <!-- Search, filters and primary action -->
-    <div class="toolbar">
-      <div class="control control--search">
-        <label class="sr-only" for="candidate-search">Search candidates</label>
+<div class="shell" [class.shell--collapsed]="!sidebarOpen()">
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <a class="brand" routerLink="/dashboard" aria-label="IMS, Interview Management System">
+      <span class="brand__logo">
+        <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor" aria-hidden="true">
+          <circle cx="12" cy="8.5" r="3" />
+          <circle cx="5.5" cy="10" r="2" />
+          <circle cx="18.5" cy="10" r="2" />
+          <path d="M6 19c0-3 2.7-5 6-5s6 2 6 5z" />
+        </svg>
+      </span>
+      <span class="brand__text">
+        <strong>IMS</strong>
+        <small>Interview Management System</small>
+      </span>
+    </a>
+
+    <nav class="sidebar__nav" aria-label="Main navigation">
+      <ul>
+          <li>
+            <a class="nav-link" routerLink="/dashboard" routerLinkActive="is-active" ariaCurrentWhenActive="page">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11 12 3l9 8"/><path d="M5 10v10h14V10"/></svg>
+              <span class="nav-link__label">Dashboard</span>
+            </a>
+          </li>
+          <li>
+            <a class="nav-link" routerLink="/candidates" routerLinkActive="is-active" ariaCurrentWhenActive="page">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"/></svg>
+              <span class="nav-link__label">Candidates</span>
+            </a>
+          </li>
+          <li>
+            <a class="nav-link" routerLink="/interviews" routerLinkActive="is-active" ariaCurrentWhenActive="page">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>
+              <span class="nav-link__label">Interviews</span>
+            </a>
+          </li>
+          <li>
+            <a class="nav-link" routerLink="/interviewers" routerLinkActive="is-active" ariaCurrentWhenActive="page">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2 20c0-3.5 3-5.5 7-5.5s7 2 7 5.5"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18 14.8c2.4.6 4 2.3 4 5.2"/></svg>
+              <span class="nav-link__label">Interviewers</span>
+            </a>
+          </li>
+          <li>
+            <a class="nav-link" routerLink="/feedback" routerLinkActive="is-active" ariaCurrentWhenActive="page">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/></svg>
+              <span class="nav-link__label">Feedback</span>
+            </a>
+          </li>
+          <li>
+            <a class="nav-link" routerLink="/reports" routerLinkActive="is-active" ariaCurrentWhenActive="page">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 20v-8M12 20V5M19 20v-5"/></svg>
+              <span class="nav-link__label">Reports</span>
+            </a>
+          </li>
+          <li>
+            <a class="nav-link" routerLink="/notifications" routerLinkActive="is-active" ariaCurrentWhenActive="page">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 16v-5a6 6 0 0 1 12 0v5l2 2H4z"/><path d="M10 21h4"/></svg>
+              <span class="nav-link__label">Notifications</span>
+              <span class="nav-badge">{{ notificationCount }}</span>
+            </a>
+          </li>
+          <li>
+            <a class="nav-link" routerLink="/activity-log" routerLinkActive="is-active" ariaCurrentWhenActive="page">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+              <span class="nav-link__label">Activity Log</span>
+            </a>
+          </li>
+          <li>
+            <a class="nav-link" routerLink="/settings" routerLinkActive="is-active" ariaCurrentWhenActive="page">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9 7 7M17 17l2.1 2.1M4.9 19.1 7 17M17 7l2.1-2.1"/></svg>
+              <span class="nav-link__label">Settings</span>
+            </a>
+          </li>
+      </ul>
+    </nav>
+
+    <div class="sidebar__user">
+      <img class="user-avatar" [src]="user.avatar" alt="" width="40" height="40" />
+      <span class="user-info">
+        <strong>{{ user.name }}</strong>
+        <small>{{ user.role }}</small>
+      </span>
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+    </div>
+  </aside>
+
+  <div class="main">
+    <!-- Header -->
+    <header class="topbar">
+      <button
+        type="button"
+        class="topbar__menu"
+        aria-controls="sidebar"
+        aria-label="Toggle sidebar"
+        [attr.aria-expanded]="sidebarOpen()"
+        (click)="toggleSidebar()"
+      >
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+
+      <h1 class="topbar__title">Candidate List</h1>
+
+      <div class="topbar__search">
+        <label class="sr-only" for="global-search">Search anything</label>
         <span class="search-box">
-          <input
-            id="candidate-search"
-            type="search"
-            placeholder="Search candidates…"
-            autocomplete="off"
-            [value]="searchTerm()"
-            (input)="onSearch($event)"
-          />
-          <svg class="search-box__icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
-            <circle cx="11" cy="11" r="7" />
-            <path d="m20 20-3.5-3.5" />
-          </svg>
+          <input id="global-search" type="search" placeholder="Search anything…" autocomplete="off" />
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="search-box__icon"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
         </span>
       </div>
 
-      <div class="control">
-        <label for="status-filter">Status</label>
-        <select id="status-filter" (change)="onStatus($event)">
-          <option value="" [selected]="statusFilter() === ''">All Status</option>
-          @for (status of statuses; track status) {
-            <option [value]="status" [selected]="statusFilter() === status">{{ status }}</option>
-          }
-        </select>
-      </div>
-
-      <div class="control">
-        <label for="position-filter">Position</label>
-        <select id="position-filter" (change)="onPosition($event)">
-          <option value="" [selected]="positionFilter() === ''">All Positions</option>
-          @for (position of positions(); track position) {
-            <option [value]="position" [selected]="positionFilter() === position">{{ position }}</option>
-          }
-        </select>
-      </div>
-
-      <div class="control">
-        <label for="source-filter">Source</label>
-        <select id="source-filter" (change)="onSource($event)">
-          <option value="" [selected]="sourceFilter() === ''">All Sources</option>
-          @for (source of sources(); track source) {
-            <option [value]="source" [selected]="sourceFilter() === source">{{ source }}</option>
-          }
-        </select>
-      </div>
-
-      <button
-        type="button"
-        class="btn btn--outline more-filters-btn"
-        aria-controls="more-filters"
-        [attr.aria-expanded]="showMoreFilters()"
-        (click)="showMoreFilters.set(!showMoreFilters())"
-      >
-        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true">
-          <path d="M3 5h18l-7 8v5l-4 2v-7z" />
-        </svg>
-        More Filters
-      </button>
-
-      <a class="btn btn--primary add-btn" routerLink="/candidates/new">
-        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
-          <path d="M12 5v14M5 12h14" />
-        </svg>
-        Add Candidate
+      <a class="topbar__bell" routerLink="/notifications" [attr.aria-label]="'Notifications, ' + notificationCount + ' unread'">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 16v-5a6 6 0 0 1 12 0v5l2 2H4z"/><path d="M10 21h4"/></svg>
+        <span class="topbar__count" aria-hidden="true">{{ notificationCount }}</span>
       </a>
-    </div>
 
-    @if (showMoreFilters()) {
-      <div id="more-filters" class="more-filters">
-        <div class="control">
-          <label for="applied-from">Applied from</label>
-          <input id="applied-from" type="date" [value]="appliedFrom()" (change)="onAppliedFrom($event)" />
-        </div>
-        <div class="control">
-          <label for="applied-to">Applied to</label>
-          <input id="applied-to" type="date" [value]="appliedTo()" (change)="onAppliedTo($event)" />
-        </div>
-        <button type="button" class="btn btn--ghost" (click)="clearFilters()">Clear all filters</button>
-      </div>
-    }
+      <button type="button" class="topbar__user" aria-label="Account menu">
+        <img class="user-avatar" [src]="user.avatar" alt="" width="44" height="44" />
+        <span class="user-info">
+          <strong>{{ user.name }}</strong>
+          <small>{{ user.role }}</small>
+        </span>
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+      </button>
+    </header>
 
-    <!-- Export and page size -->
-    <div class="table-tools">
-      <div class="menu-anchor">
-        <button
-          type="button"
-          class="btn btn--outline export-btn"
-          aria-haspopup="menu"
-          [attr.aria-expanded]="exportOpen()"
-          (click)="toggleExport($event)"
-        >
-          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M12 4v11m0 0-4-4m4 4 4-4M5 20h14" />
-          </svg>
-          Export
-          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="m6 9 6 6 6-6" />
-          </svg>
-        </button>
-        @if (exportOpen()) {
-          <ul class="menu" role="menu">
-            <li role="none">
-              <button type="button" role="menuitem" (click)="exportCsv()">CSV (.csv)</button>
-            </li>
-            <li role="none">
-              <button type="button" role="menuitem" disabled title="Server-side export, available when the API is connected">Excel (.xlsx)</button>
-            </li>
-            <li role="none">
-              <button type="button" role="menuitem" disabled title="Server-side export, available when the API is connected">PDF (.pdf)</button>
-            </li>
-          </ul>
-        }
-      </div>
-
-      <div class="page-size">
-        <label for="page-size">Show</label>
-        <select id="page-size" (change)="onPageSize($event)">
-          @for (size of pageSizes; track size) {
-            <option [value]="size" [selected]="pageSize() === size">{{ size }}</option>
-          }
-        </select>
-        <span>entries</span>
-      </div>
-    </div>
-
-    <!-- Table -->
-    <div class="table-wrap">
-      <table>
-        <caption class="sr-only">Candidates</caption>
-        <thead>
-          <tr>
-            <th scope="col" class="col-check">
+    <section class="candidates" aria-label="Candidate list">
+      <div class="panel">
+        <!-- Search, filters and primary action -->
+        <div class="toolbar">
+          <div class="control control--search">
+            <label class="sr-only" for="candidate-search">Search candidates</label>
+            <span class="search-box">
               <input
-                class="check-all"
-                type="checkbox"
-                aria-label="Select all candidates on this page"
-                [checked]="allOnPageSelected()"
-                [indeterminate]="someOnPageSelected()"
-                (change)="toggleAllOnPage()"
+                id="candidate-search"
+                type="search"
+                placeholder="Search candidates…"
+                autocomplete="off"
+                [value]="searchTerm()"
+                (input)="onSearch($event)"
               />
-            </th>
-            @for (col of columns; track col.key) {
-              <th scope="col" [attr.aria-sort]="ariaSort(col.key)">
-                <button
-                  type="button"
-                  class="sort"
-                  [attr.data-dir]="sortKey() === col.key ? sortDirection() : null"
-                  (click)="sortBy(col.key)"
-                >
-                  {{ col.label }}
-                  <svg class="sort__icon" viewBox="0 0 10 14" width="10" height="14" aria-hidden="true">
-                    <path class="up" d="M5 1 9 5H1z" />
-                    <path class="down" d="M5 13 1 9h8z" />
-                  </svg>
-                </button>
-              </th>
-            }
-            <th scope="col" class="col-actions">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          @for (c of pageRows(); track c.id) {
-            <tr class="row" [class.is-selected]="isSelected(c.id)">
-              <td class="col-check">
-                <input
-                  class="row-check"
-                  type="checkbox"
-                  [attr.aria-label]="'Select ' + c.name"
-                  [checked]="isSelected(c.id)"
-                  (change)="toggleRow(c.id)"
-                />
-              </td>
-              <td><a class="code-link" [routerLink]="['/candidates', c.id]">{{ c.code }}</a></td>
-              <td>
-                <span class="person">
-                  <span class="avatar" [attr.data-tone]="c.id % 5" aria-hidden="true">{{ initials(c.name) }}</span>
-                  <span>{{ c.name }}</span>
-                </span>
-              </td>
-              <td>{{ c.position }}</td>
-              <td>{{ c.source }}</td>
-              <td>{{ c.appliedOn | date: 'dd MMM yyyy' }}</td>
-              <td><span class="badge" [attr.data-status]="statusKey(c.status)">{{ c.status }}</span></td>
-              <td class="col-actions">
-                <span class="actions">
-                  <a class="icon-btn icon-btn--view" [routerLink]="['/candidates', c.id]" [attr.aria-label]="'View ' + c.name">
-                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                      <path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z" />
-                      <circle cx="12" cy="12" r="3" />
-                    </svg>
-                  </a>
-                  <span class="menu-anchor">
-                    <button
-                      type="button"
-                      class="icon-btn kebab"
-                      aria-haspopup="menu"
-                      [attr.aria-expanded]="openMenuId() === c.id"
-                      [attr.aria-label]="'More actions for ' + c.name"
-                      (click)="toggleMenu(c.id, $event)"
-                    >
-                      <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true">
-                        <circle cx="12" cy="5" r="1.8" />
-                        <circle cx="12" cy="12" r="1.8" />
-                        <circle cx="12" cy="19" r="1.8" />
-                      </svg>
-                    </button>
-                    @if (openMenuId() === c.id) {
-                      <ul class="menu" role="menu">
-                        <li role="none"><a role="menuitem" [routerLink]="['/candidates', c.id]">View details</a></li>
-                        <li role="none"><a role="menuitem" [routerLink]="['/candidates', c.id, 'edit']">Edit candidate</a></li>
-                        <li role="none">
-                          <a role="menuitem" routerLink="/interviews/new" [queryParams]="{ candidateId: c.id }">Schedule interview</a>
-                        </li>
-                      </ul>
-                    }
-                  </span>
-                </span>
-              </td>
-            </tr>
-          } @empty {
-            <tr>
-              <td class="empty" colspan="8">
-                <p>No candidates match your filters.</p>
-                <button type="button" class="btn btn--outline" (click)="clearFilters()">Clear filters</button>
-              </td>
-            </tr>
-          }
-        </tbody>
-      </table>
-    </div>
+              <svg class="search-box__icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+                <circle cx="11" cy="11" r="7" />
+                <path d="m20 20-3.5-3.5" />
+              </svg>
+            </span>
+          </div>
 
-    <!-- Footer: range summary and pager -->
-    <div class="table-footer">
-      <p class="summary" aria-live="polite">
-        Showing {{ rangeStart() }} to {{ rangeEnd() }} of {{ totalEntries() }} entries
-      </p>
+          <div class="control">
+            <label for="status-filter">Status</label>
+            <select id="status-filter" (change)="onStatus($event)">
+              <option value="" [selected]="statusFilter() === ''">All Status</option>
+              @for (status of statuses; track status) {
+                <option [value]="status" [selected]="statusFilter() === status">{{ status }}</option>
+              }
+            </select>
+          </div>
 
-      <nav class="pagination" aria-label="Candidate pages">
-        <button type="button" class="page-btn" aria-label="Previous page" [disabled]="page() === 1" (click)="goTo(page() - 1)">
-          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="m15 6-6 6 6 6" />
-          </svg>
-        </button>
+          <div class="control">
+            <label for="position-filter">Position</label>
+            <select id="position-filter" (change)="onPosition($event)">
+              <option value="" [selected]="positionFilter() === ''">All Positions</option>
+              @for (position of positions(); track position) {
+                <option [value]="position" [selected]="positionFilter() === position">{{ position }}</option>
+              }
+            </select>
+          </div>
 
-        @for (item of pageItems(); track $index) {
-          @if (item === '…') {
-            <span class="ellipsis" aria-hidden="true">…</span>
-          } @else {
+          <div class="control">
+            <label for="source-filter">Source</label>
+            <select id="source-filter" (change)="onSource($event)">
+              <option value="" [selected]="sourceFilter() === ''">All Sources</option>
+              @for (source of sources(); track source) {
+                <option [value]="source" [selected]="sourceFilter() === source">{{ source }}</option>
+              }
+            </select>
+          </div>
+
+          <button
+            type="button"
+            class="btn btn--outline more-filters-btn"
+            aria-controls="more-filters"
+            [attr.aria-expanded]="showMoreFilters()"
+            (click)="showMoreFilters.set(!showMoreFilters())"
+          >
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true">
+              <path d="M3 5h18l-7 8v5l-4 2v-7z" />
+            </svg>
+            More Filters
+          </button>
+
+          <a class="btn btn--primary add-btn" routerLink="/candidates/new">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+              <path d="M12 5v14M5 12h14" />
+            </svg>
+            Add Candidate
+          </a>
+        </div>
+
+        @if (showMoreFilters()) {
+          <div id="more-filters" class="more-filters">
+            <div class="control">
+              <label for="applied-from">Applied from</label>
+              <input id="applied-from" type="date" [value]="appliedFrom()" (change)="onAppliedFrom($event)" />
+            </div>
+            <div class="control">
+              <label for="applied-to">Applied to</label>
+              <input id="applied-to" type="date" [value]="appliedTo()" (change)="onAppliedTo($event)" />
+            </div>
+            <button type="button" class="btn btn--ghost" (click)="clearFilters()">Clear all filters</button>
+          </div>
+        }
+
+        <!-- Export and page size -->
+        <div class="table-tools">
+          <div class="menu-anchor">
             <button
               type="button"
-              class="page-btn"
-              [class.is-current]="item === page()"
-              [attr.aria-current]="item === page() ? 'page' : null"
-              [attr.aria-label]="'Page ' + item"
-              (click)="goTo(item)"
+              class="btn btn--outline export-btn"
+              aria-haspopup="menu"
+              [attr.aria-expanded]="exportOpen()"
+              (click)="toggleExport($event)"
             >
-              {{ item }}
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M12 4v11m0 0-4-4m4 4 4-4M5 20h14" />
+              </svg>
+              Export
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="m6 9 6 6 6-6" />
+              </svg>
             </button>
-          }
-        }
+            @if (exportOpen()) {
+              <ul class="menu" role="menu">
+                <li role="none">
+                  <button type="button" role="menuitem" (click)="exportCsv()">CSV (.csv)</button>
+                </li>
+                <li role="none">
+                  <button type="button" role="menuitem" disabled title="Server-side export, available when the API is connected">Excel (.xlsx)</button>
+                </li>
+                <li role="none">
+                  <button type="button" role="menuitem" disabled title="Server-side export, available when the API is connected">PDF (.pdf)</button>
+                </li>
+              </ul>
+            }
+          </div>
 
-        <button type="button" class="page-btn" aria-label="Next page" [disabled]="page() === totalPages()" (click)="goTo(page() + 1)">
-          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="m9 6 6 6-6 6" />
-          </svg>
-        </button>
-      </nav>
-    </div>
+          <div class="page-size">
+            <label for="page-size">Show</label>
+            <select id="page-size" (change)="onPageSize($event)">
+              @for (size of pageSizes; track size) {
+                <option [value]="size" [selected]="pageSize() === size">{{ size }}</option>
+              }
+            </select>
+            <span>entries</span>
+          </div>
+        </div>
+
+        <!-- Table -->
+        <div class="table-wrap">
+          <table>
+            <caption class="sr-only">Candidates</caption>
+            <thead>
+              <tr>
+                <th scope="col" class="col-check">
+                  <input
+                    class="check-all"
+                    type="checkbox"
+                    aria-label="Select all candidates on this page"
+                    [checked]="allOnPageSelected()"
+                    [indeterminate]="someOnPageSelected()"
+                    (change)="toggleAllOnPage()"
+                  />
+                </th>
+                @for (col of columns; track col.key) {
+                  <th scope="col" [attr.aria-sort]="ariaSort(col.key)">
+                    <button
+                      type="button"
+                      class="sort"
+                      [attr.data-dir]="sortKey() === col.key ? sortDirection() : null"
+                      (click)="sortBy(col.key)"
+                    >
+                      {{ col.label }}
+                      <svg class="sort__icon" viewBox="0 0 10 14" width="10" height="14" aria-hidden="true">
+                        <path class="up" d="M5 1 9 5H1z" />
+                        <path class="down" d="M5 13 1 9h8z" />
+                      </svg>
+                    </button>
+                  </th>
+                }
+                <th scope="col" class="col-actions">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (c of pageRows(); track c.id) {
+                <tr class="row" [class.is-selected]="isSelected(c.id)">
+                  <td class="col-check">
+                    <input
+                      class="row-check"
+                      type="checkbox"
+                      [attr.aria-label]="'Select ' + c.name"
+                      [checked]="isSelected(c.id)"
+                      (change)="toggleRow(c.id)"
+                    />
+                  </td>
+                  <td><a class="code-link" [routerLink]="['/candidates', c.id]">{{ c.code }}</a></td>
+                  <td>
+                    <span class="person">
+                      @if (c.avatar) {
+                        <img class="avatar" [src]="c.avatar" alt="" width="36" height="36" loading="lazy" />
+                      } @else {
+                        <span class="avatar" [attr.data-tone]="c.id % 5" aria-hidden="true">{{ initials(c.name) }}</span>
+                      }
+                      <span>{{ c.name }}</span>
+                    </span>
+                  </td>
+                  <td>{{ c.position }}</td>
+                  <td>{{ c.source }}</td>
+                  <td>{{ c.appliedOn | date: 'dd MMM yyyy' }}</td>
+                  <td><span class="badge" [attr.data-status]="statusKey(c.status)">{{ c.status }}</span></td>
+                  <td class="col-actions">
+                    <span class="actions">
+                      <a class="icon-btn icon-btn--view" [routerLink]="['/candidates', c.id]" [attr.aria-label]="'View ' + c.name">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                          <path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z" />
+                          <circle cx="12" cy="12" r="3" />
+                        </svg>
+                      </a>
+                      <span class="menu-anchor">
+                        <button
+                          type="button"
+                          class="icon-btn kebab"
+                          aria-haspopup="menu"
+                          [attr.aria-expanded]="openMenuId() === c.id"
+                          [attr.aria-label]="'More actions for ' + c.name"
+                          (click)="toggleMenu(c.id, $event)"
+                        >
+                          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true">
+                            <circle cx="12" cy="5" r="1.8" />
+                            <circle cx="12" cy="12" r="1.8" />
+                            <circle cx="12" cy="19" r="1.8" />
+                          </svg>
+                        </button>
+                        @if (openMenuId() === c.id) {
+                          <ul class="menu" role="menu">
+                            <li role="none"><a role="menuitem" [routerLink]="['/candidates', c.id]">View details</a></li>
+                            <li role="none"><a role="menuitem" [routerLink]="['/candidates', c.id, 'edit']">Edit candidate</a></li>
+                            <li role="none">
+                              <a role="menuitem" routerLink="/interviews/new" [queryParams]="{ candidateId: c.id }">Schedule interview</a>
+                            </li>
+                          </ul>
+                        }
+                      </span>
+                    </span>
+                  </td>
+                </tr>
+              } @empty {
+                <tr>
+                  <td class="empty" colspan="8">
+                    <p>No candidates match your filters.</p>
+                    <button type="button" class="btn btn--outline" (click)="clearFilters()">Clear filters</button>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Footer: range summary and pager -->
+        <div class="table-footer">
+          <p class="summary" aria-live="polite">
+            Showing {{ rangeStart() }} to {{ rangeEnd() }} of {{ totalEntries() }} entries
+          </p>
+
+          <nav class="pagination" aria-label="Candidate pages">
+            <button type="button" class="page-btn" aria-label="Previous page" [disabled]="page() === 1" (click)="goTo(page() - 1)">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="m15 6-6 6 6 6" />
+              </svg>
+            </button>
+
+            @for (item of pageItems(); track $index) {
+              @if (item === '…') {
+                <span class="ellipsis" aria-hidden="true">…</span>
+              } @else {
+                <button
+                  type="button"
+                  class="page-btn"
+                  [class.is-current]="item === page()"
+                  [attr.aria-current]="item === page() ? 'page' : null"
+                  [attr.aria-label]="'Page ' + item"
+                  (click)="goTo(item)"
+                >
+                  {{ item }}
+                </button>
+              }
+            }
+
+            <button type="button" class="page-btn" aria-label="Next page" [disabled]="page() === totalPages()" (click)="goTo(page() + 1)">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="m9 6 6 6-6 6" />
+              </svg>
+            </button>
+          </nav>
+        </div>
+      </div>
+    </section>
   </div>
-</section>
+</div>

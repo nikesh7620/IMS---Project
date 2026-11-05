@@ -1,0 +1,359 @@
+<div class="shell" [class.shell--collapsed]="!sidebarOpen()">
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <a class="brand" routerLink="/dashboard" aria-label="IMS, Interview Management System">
+      <span class="brand__logo">
+        <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor" aria-hidden="true">
+          <circle cx="12" cy="8.5" r="3" />
+          <circle cx="5.5" cy="10" r="2" />
+          <circle cx="18.5" cy="10" r="2" />
+          <path d="M6 19c0-3 2.7-5 6-5s6 2 6 5z" />
+        </svg>
+      </span>
+      <span class="brand__text">
+        <strong>IMS</strong>
+        <small>Interview Management System</small>
+      </span>
+    </a>
+
+    <nav class="sidebar__nav" aria-label="Main navigation">
+      <ul>
+          <li>
+            <a class="nav-link" routerLink="/dashboard" routerLinkActive="is-active" ariaCurrentWhenActive="page">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11 12 3l9 8"/><path d="M5 10v10h14V10"/></svg>
+              <span class="nav-link__label">Dashboard</span>
+            </a>
+          </li>
+          <li>
+            <a class="nav-link" routerLink="/candidates" routerLinkActive="is-active" ariaCurrentWhenActive="page">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"/></svg>
+              <span class="nav-link__label">Candidates</span>
+            </a>
+          </li>
+          <li>
+            <a class="nav-link" routerLink="/interviews" routerLinkActive="is-active" ariaCurrentWhenActive="page">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>
+              <span class="nav-link__label">Interviews</span>
+            </a>
+          </li>
+          <li>
+            <a class="nav-link" routerLink="/interviewers" routerLinkActive="is-active" ariaCurrentWhenActive="page">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2 20c0-3.5 3-5.5 7-5.5s7 2 7 5.5"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18 14.8c2.4.6 4 2.3 4 5.2"/></svg>
+              <span class="nav-link__label">Interviewers</span>
+            </a>
+          </li>
+          <li>
+            <a class="nav-link" routerLink="/feedback" routerLinkActive="is-active" ariaCurrentWhenActive="page">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/></svg>
+              <span class="nav-link__label">Feedback</span>
+            </a>
+          </li>
+          <li>
+            <a class="nav-link" routerLink="/reports" routerLinkActive="is-active" ariaCurrentWhenActive="page">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 20v-8M12 20V5M19 20v-5"/></svg>
+              <span class="nav-link__label">Reports</span>
+            </a>
+          </li>
+          <li>
+            <a class="nav-link" routerLink="/notifications" routerLinkActive="is-active" ariaCurrentWhenActive="page">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 16v-5a6 6 0 0 1 12 0v5l2 2H4z"/><path d="M10 21h4"/></svg>
+              <span class="nav-link__label">Notifications</span>
+              <span class="nav-badge">{{ notificationCount }}</span>
+            </a>
+          </li>
+          <li>
+            <a class="nav-link" routerLink="/activity-log" routerLinkActive="is-active" ariaCurrentWhenActive="page">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+              <span class="nav-link__label">Activity Log</span>
+            </a>
+          </li>
+          <li>
+            <a class="nav-link" routerLink="/settings" routerLinkActive="is-active" ariaCurrentWhenActive="page">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9 7 7M17 17l2.1 2.1M4.9 19.1 7 17M17 7l2.1-2.1"/></svg>
+              <span class="nav-link__label">Settings</span>
+            </a>
+          </li>
+      </ul>
+    </nav>
+
+    <div class="sidebar__user">
+      <img class="user-avatar" [src]="user.avatar" alt="" width="40" height="40" />
+      <span class="user-info">
+        <strong>{{ user.name }}</strong>
+        <small>{{ user.role }}</small>
+      </span>
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+    </div>
+  </aside>
+
+  <div class="main">
+    <!-- Header -->
+    <header class="topbar">
+      <button
+        type="button"
+        class="topbar__menu"
+        aria-controls="sidebar"
+        aria-label="Toggle sidebar"
+        [attr.aria-expanded]="sidebarOpen()"
+        (click)="toggleSidebar()"
+      >
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+
+      <h1 class="topbar__title">Add Candidate</h1>
+
+      <div class="topbar__search">
+        <label class="sr-only" for="global-search">Search anything</label>
+        <span class="search-box">
+          <input id="global-search" type="search" placeholder="Search anything…" autocomplete="off" />
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="search-box__icon"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        </span>
+      </div>
+
+      <a class="topbar__bell" routerLink="/notifications" [attr.aria-label]="'Notifications, ' + notificationCount + ' unread'">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 16v-5a6 6 0 0 1 12 0v5l2 2H4z"/><path d="M10 21h4"/></svg>
+        <span class="topbar__count" aria-hidden="true">{{ notificationCount }}</span>
+      </a>
+
+      <button type="button" class="topbar__user" aria-label="Account menu">
+        <img class="user-avatar" [src]="user.avatar" alt="" width="44" height="44" />
+        <span class="user-info">
+          <strong>{{ user.name }}</strong>
+          <small>{{ user.role }}</small>
+        </span>
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+      </button>
+    </header>
+
+    <main class="page">
+      <a class="back-link" routerLink="/candidates">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5m0 0 6-6m-6 6 6 6"/></svg>
+        Back to Candidate List
+      </a>
+
+      <form class="panel" [formGroup]="form" (ngSubmit)="save()" novalidate>
+        <section class="form-section" aria-labelledby="info-title">
+          <div class="section__head">
+            <span class="section__icon"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><circle cx="12" cy="10" r="2.5"/><path d="M8.5 17c.6-2 2-3 3.5-3s2.9 1 3.5 3"/></svg></span>
+            <h2 class="section__title" id="info-title">Candidate Information</h2>
+          </div>
+          <div class="grid">
+          <div class="field">
+            <label for="first-name">First Name <span class="req" aria-hidden="true">*</span></label>
+            <input id="first-name" type="text" formControlName="firstName" placeholder="Enter first name" aria-required="true" autocomplete="given-name" [attr.aria-invalid]="invalid('firstName')" [attr.aria-describedby]="invalid('firstName') ? 'first-name-error' : null" />
+            @if (invalid('firstName')) {
+              <p class="field-error" id="first-name-error">{{ errorFor('firstName') }}</p>
+            }
+          </div>
+          <div class="field">
+            <label for="last-name">Last Name <span class="req" aria-hidden="true">*</span></label>
+            <input id="last-name" type="text" formControlName="lastName" placeholder="Enter last name" aria-required="true" autocomplete="family-name" [attr.aria-invalid]="invalid('lastName')" [attr.aria-describedby]="invalid('lastName') ? 'last-name-error' : null" />
+            @if (invalid('lastName')) {
+              <p class="field-error" id="last-name-error">{{ errorFor('lastName') }}</p>
+            }
+          </div>
+          <div class="field">
+            <label for="email">Email Address <span class="req" aria-hidden="true">*</span></label>
+            <input id="email" type="email" formControlName="email" placeholder="Enter email address" aria-required="true" autocomplete="email" [attr.aria-invalid]="invalid('email')" [attr.aria-describedby]="invalid('email') ? 'email-error' : null" />
+            @if (invalid('email')) {
+              <p class="field-error" id="email-error">{{ errorFor('email') }}</p>
+            }
+          </div>
+          <div class="field">
+            <label for="phone">Phone Number <span class="req" aria-hidden="true">*</span></label>
+            <div class="phone" [class.is-invalid]="invalid('phone')">
+              <span class="phone__code">
+                <span class="flag" [attr.data-iso]="country(form.controls.phoneCode.value)?.iso" aria-hidden="true">{{ flagText(form.controls.phoneCode.value) }}</span>
+                <select id="phone-code" formControlName="phoneCode" aria-label="Country code for phone number">
+                  @for (c of countries; track c.iso) {
+                    <option [value]="c.dial">{{ c.dial }}</option>
+                  }
+                </select>
+              </span>
+              <input id="phone" type="tel" formControlName="phone" placeholder="Enter phone number" inputmode="numeric" autocomplete="tel-national" aria-required="true" [attr.aria-invalid]="invalid('phone')" [attr.aria-describedby]="invalid('phone') ? 'phone-error' : null" />
+            </div>
+            @if (invalid('phone')) {
+              <p class="field-error" id="phone-error">{{ errorFor('phone') }}</p>
+            }
+          </div>
+          <div class="field">
+            <label for="candidate-id">Candidate ID (Auto)</label>
+            <input id="candidate-id" type="text" value="Auto generated" readonly />
+          </div>
+          <div class="field">
+            <label for="alt-phone">Alternate Phone</label>
+            <div class="phone" [class.is-invalid]="invalid('altPhone')">
+              <span class="phone__code">
+                <span class="flag" [attr.data-iso]="country(form.controls.altPhoneCode.value)?.iso" aria-hidden="true">{{ flagText(form.controls.altPhoneCode.value) }}</span>
+                <select id="alt-phone-code" formControlName="altPhoneCode" aria-label="Country code for alternate phone">
+                  @for (c of countries; track c.iso) {
+                    <option [value]="c.dial">{{ c.dial }}</option>
+                  }
+                </select>
+              </span>
+              <input id="alt-phone" type="tel" formControlName="altPhone" placeholder="Enter alternate number" inputmode="numeric" autocomplete="tel-national" [attr.aria-invalid]="invalid('altPhone')" [attr.aria-describedby]="invalid('altPhone') ? 'alt-phone-error' : null" />
+            </div>
+            @if (invalid('altPhone')) {
+              <p class="field-error" id="alt-phone-error">{{ errorFor('altPhone') }}</p>
+            }
+          </div>
+          <div class="field">
+            <label for="dob">Date of Birth</label>
+            <div class="date-field">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="date-field__icon"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>
+              <input id="dob" type="date" formControlName="dob" [max]="today" [class.is-empty]="!form.controls.dob.value" />
+              @if (!form.controls.dob.value) {
+                <span class="date-field__placeholder" aria-hidden="true">Select date</span>
+              }
+            </div>
+          
+          </div>
+          <div class="field">
+            <label for="gender">Gender</label>
+            <select id="gender" formControlName="gender" [class.is-placeholder]="!form.controls.gender.value">
+              <option value="" disabled>Select gender</option>
+              @for (option of genders; track option) {
+                <option [value]="option">{{ option }}</option>
+              }
+            </select>
+          
+          </div>
+          <div class="field">
+            <label for="current-position">Current Position</label>
+            <input id="current-position" type="text" formControlName="currentPosition" placeholder="Enter current position" />
+          
+          </div>
+          <div class="field">
+            <label for="experience">Total Experience (Years)</label>
+            <select id="experience" formControlName="experience" [class.is-placeholder]="!form.controls.experience.value">
+              <option value="" disabled>Select experience</option>
+              @for (option of experiences; track option) {
+                <option [value]="option">{{ option }}</option>
+              }
+            </select>
+          
+          </div>
+          <div class="field">
+            <label for="notice-period">Notice Period</label>
+            <select id="notice-period" formControlName="noticePeriod" [class.is-placeholder]="!form.controls.noticePeriod.value">
+              <option value="" disabled>Select notice period</option>
+              @for (option of noticePeriods; track option) {
+                <option [value]="option">{{ option }}</option>
+              }
+            </select>
+          
+          </div>
+          <div class="field">
+            <label for="current-ctc">Current CTC (₹)</label>
+            <input id="current-ctc" type="text" formControlName="currentCtc" placeholder="Enter current CTC" inputmode="decimal" [attr.aria-invalid]="invalid('currentCtc')" [attr.aria-describedby]="invalid('currentCtc') ? 'current-ctc-error' : null" />
+            @if (invalid('currentCtc')) {
+              <p class="field-error" id="current-ctc-error">{{ errorFor('currentCtc') }}</p>
+            }
+          </div>
+          </div>
+        </section>
+
+        <section class="form-section" aria-labelledby="application-title">
+          <div class="section__head">
+            <span class="section__icon"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h6"/></svg></span>
+            <h2 class="section__title" id="application-title">Application Details</h2>
+          </div>
+          <div class="grid">
+          <div class="field">
+            <label for="position">Position Applied For <span class="req" aria-hidden="true">*</span></label>
+            <select id="position" formControlName="position" aria-required="true" [attr.aria-invalid]="invalid('position')" [attr.aria-describedby]="invalid('position') ? 'position-error' : null" [class.is-placeholder]="!form.controls.position.value">
+              <option value="" disabled>Select position</option>
+              @for (option of positions; track option) {
+                <option [value]="option">{{ option }}</option>
+              }
+            </select>
+            @if (invalid('position')) {
+              <p class="field-error" id="position-error">{{ errorFor('position') }}</p>
+            }
+          </div>
+          <div class="field">
+            <label for="source">Source <span class="req" aria-hidden="true">*</span></label>
+            <select id="source" formControlName="source" aria-required="true" [attr.aria-invalid]="invalid('source')" [attr.aria-describedby]="invalid('source') ? 'source-error' : null" [class.is-placeholder]="!form.controls.source.value">
+              <option value="" disabled>Select source</option>
+              @for (option of sources; track option) {
+                <option [value]="option">{{ option }}</option>
+              }
+            </select>
+            @if (invalid('source')) {
+              <p class="field-error" id="source-error">{{ errorFor('source') }}</p>
+            }
+          </div>
+          <div class="field">
+            <label for="applied-on">Applied On <span class="req" aria-hidden="true">*</span></label>
+            <div class="date-field">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="date-field__icon"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>
+              <input id="applied-on" type="date" formControlName="appliedOn" [max]="today" aria-required="true" [attr.aria-invalid]="invalid('appliedOn')" [attr.aria-describedby]="invalid('appliedOn') ? 'applied-on-error' : null" [class.is-empty]="!form.controls.appliedOn.value" />
+              @if (!form.controls.appliedOn.value) {
+                <span class="date-field__placeholder" aria-hidden="true">Select date</span>
+              }
+            </div>
+            @if (invalid('appliedOn')) {
+              <p class="field-error" id="applied-on-error">{{ errorFor('appliedOn') }}</p>
+            }
+          </div>
+          <div class="field">
+            <span class="field__label" id="resume-label">Resume</span>
+            @if (resume(); as file) {
+              <div class="file-chip">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5"/></svg>
+                <span class="file-chip__text">
+                  <strong>{{ file.name }}</strong>
+                  <small>{{ fileSize(file.size) }}</small>
+                </span>
+                <button type="button" class="btn btn--ghost file-chip__remove" (click)="removeResume()">Remove</button>
+              </div>
+            } @else {
+              <label
+                class="upload"
+                for="resume-file"
+                [class.is-dragover]="dragOver()"
+                (dragover)="onDragOver($event)"
+                (dragleave)="onDragLeave()"
+                (drop)="onDrop($event)"
+              >
+                <input id="resume-file" class="sr-only" type="file" accept=".pdf,.doc,.docx" aria-labelledby="resume-label" (change)="onResumePicked($event)" />
+                <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="upload__icon"><path d="M7 18a4.5 4.5 0 0 1-.6-8.96A6 6 0 0 1 18 8.5a4.75 4.75 0 0 1-.5 9.5"/><path d="m12 12 0 8M9 15l3-3 3 3"/></svg>
+                <span class="upload__title"><strong>Click to upload</strong> or drag and drop</span>
+                <span class="upload__hint">PDF, DOC, DOCX (Max. 5MB)</span>
+              </label>
+            }
+            @if (resumeError()) {
+              <p class="field-error upload-error" role="alert">{{ resumeError() }}</p>
+            }
+          </div>
+          </div>
+        </section>
+
+        <section class="form-section" aria-labelledby="additional-title">
+          <div class="section__head">
+            <span class="section__icon"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h3"/></svg></span>
+            <h2 class="section__title" id="additional-title">Additional Information</h2>
+          </div>
+          <div class="field">
+            <label for="comments">Comments / Notes</label>
+            <div class="textarea-wrap">
+              <textarea
+                id="comments"
+                formControlName="comments"
+                rows="3"
+                [maxlength]="maxComments"
+                placeholder="Enter comments or notes about the candidate (optional)"
+              ></textarea>
+              <span class="counter" aria-live="polite">{{ form.controls.comments.value.length }} / {{ maxComments }}</span>
+            </div>
+          </div>
+        </section>
+
+          <div class="form-actions">
+            <a class="btn btn--neutral" routerLink="/candidates">Cancel</a>
+            <button type="submit" class="btn btn--primary">Save Candidate</button>
+          </div>
+      </form>
+    </main>
+  </div>
+</div>

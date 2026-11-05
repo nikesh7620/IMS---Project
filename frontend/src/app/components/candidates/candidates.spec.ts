@@ -102,6 +102,10 @@ describe('Candidates', () => {
       expect(normalise(rows()[0].querySelector('.badge'))).toBe('New');
     });
 
+    it('shows a photo avatar for each row', () => {
+      expect(el.querySelectorAll('tbody tr.row img.avatar').length).toBe(10);
+    });
+
     it('shows the pager as 1 2 3 4 5 … 13', () => {
       const labels = Array.from(el.querySelectorAll('.pagination .page-btn, .pagination .ellipsis')).map((n) =>
         normalise(n),
@@ -112,6 +116,38 @@ describe('Candidates', () => {
     it('disables Previous on the first page', () => {
       const previous = el.querySelector<HTMLButtonElement>('button[aria-label="Previous page"]')!;
       expect(previous.disabled).toBe(true);
+    });
+  });
+
+  describe('layout', () => {
+    it('shows the page title and the signed-in user in the header', () => {
+      expect(normalise(el.querySelector('.topbar__title'))).toBe('Candidate List');
+      expect(normalise(el.querySelector('.topbar__user'))).toContain('Nikesh Mali');
+      expect(normalise(el.querySelector('.topbar__user'))).toContain('HR Manager');
+    });
+
+    it('lists the sidebar links in order with the notification count', () => {
+      const labels = Array.from(el.querySelectorAll('.sidebar__nav .nav-link__label')).map((n) => normalise(n));
+      expect(labels).toEqual([
+        'Dashboard',
+        'Candidates',
+        'Interviews',
+        'Interviewers',
+        'Feedback',
+        'Reports',
+        'Notifications',
+        'Activity Log',
+        'Settings',
+      ]);
+      expect(normalise(el.querySelector('.nav-badge'))).toBe('6');
+    });
+
+    it('toggles the sidebar from the menu button', () => {
+      const wasOpen = component.sidebarOpen();
+      el.querySelector<HTMLButtonElement>('.topbar__menu')!.click();
+      fixture.detectChanges();
+      expect(component.sidebarOpen()).toBe(!wasOpen);
+      expect(el.querySelector('.shell--collapsed') !== null).toBe(wasOpen);
     });
   });
 

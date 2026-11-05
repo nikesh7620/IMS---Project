@@ -1,6 +1,6 @@
 import { DOCUMENT, DatePipe } from '@angular/common';
 import { Component, HostListener, computed, inject, signal } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 /* ------------------------------------------------------------------ */
 /* Models and constants                                                */
@@ -23,6 +23,7 @@ export interface Candidate {
   source: string;
   appliedOn: string; // ISO date, yyyy-MM-dd
   status: CandidateStatus;
+  avatar?: string; // photo URL; the list falls back to initials when missing
 }
 
 export type SortKey = 'code' | 'name' | 'position' | 'source' | 'appliedOn' | 'status';
@@ -81,6 +82,9 @@ const FIRST_NAMES = ['Aarav', 'Diya', 'Kabir', 'Ishita', 'Arjun', 'Meera', 'Roha
 const LAST_NAMES = ['Nair', 'Kapoor', 'Joshi', 'Iyer', 'Desai', 'Rao', 'Bose', 'Chopra', 'Malhotra', 'Pillai'];
 
 const makeCode = (id: number) => `CAND-${String(id).padStart(5, '0')}`;
+// Placeholder photos. TODO: use the photo URL returned by the Candidates API.
+const makeAvatar = (id: number, gender: 'men' | 'women') =>
+  `https://randomuser.me/api/portraits/${gender}/${id % 100}.jpg`;
 
 function buildSampleCandidates(): Candidate[] {
   const visible: [number, string, string, string, string, CandidateStatus][] = [
@@ -104,6 +108,7 @@ function buildSampleCandidates(): Candidate[] {
     source,
     appliedOn,
     status,
+    avatar: makeAvatar(id, id % 2 ? 'men' : 'women'),
   }));
 
   const rest: Candidate[] = [];
@@ -117,6 +122,7 @@ function buildSampleCandidates(): Candidate[] {
       source: SOURCES[id % SOURCES.length],
       appliedOn: date.toISOString().slice(0, 10),
       status: CANDIDATE_STATUSES[id % CANDIDATE_STATUSES.length],
+      avatar: makeAvatar(id, id % 2 ? 'women' : 'men'),
     });
   }
   return [...first, ...rest];
@@ -128,7 +134,7 @@ function buildSampleCandidates(): Candidate[] {
 
 @Component({
   selector: 'app-candidates',
-  imports: [DatePipe, RouterLink],
+  imports: [DatePipe, RouterLink, RouterLinkActive],
   templateUrl: './candidates.html',
   styleUrl: './candidates.css',
 })
@@ -146,6 +152,16 @@ export class Candidates {
     { key: 'appliedOn', label: 'Applied On' },
     { key: 'status', label: 'Status' },
   ];
+
+  /* ---- shell (sidebar and header) ---- */
+  // TODO: replace with the auth and notification services once they exist.
+  readonly user = {
+    name: 'Nikesh Mali',
+    role: 'HR Manager',
+    avatar: 'https://randomuser.me/api/portraits/men/32.jpg',
+  };
+  readonly notificationCount = 6;
+  readonly sidebarOpen = signal((this.document.defaultView?.innerWidth ?? 1200) > 900);
 
   /* ---- state ---- */
   readonly candidates = signal<Candidate[]>(buildSampleCandidates());
@@ -219,6 +235,11 @@ export class Candidates {
   readonly someOnPageSelected = computed(
     () => !this.allOnPageSelected() && this.pageRows().some((c) => this.selectedIds().has(c.id)),
   );
+
+  /* ---- shell ---- */
+  toggleSidebar(): void {
+    this.sidebarOpen.set(!this.sidebarOpen());
+  }
 
   /* ---- filter and paging handlers ---- */
   onSearch(event: Event): void {
